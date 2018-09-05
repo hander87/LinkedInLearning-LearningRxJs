@@ -1,7 +1,19 @@
-<h1>{{ title }}!</h1>
+<h1>{{ title }}</h1>
+<header>
+  <input
+    type="text"
+    [(ngModel)]="searchString"
+    (ngModelChange)="inputChanged($event)"
+    placeholder="Search Reddit...">
+  <button (click)="searchString = ''">
+    Clear
+  </button>
+</header>
 
-<input
-  type="text"
-  [(ngModel)]="searchString"
-  (ngModelChange)="inputChanged($event)"
-  placeholder="Search...">
+<div *ngFor="let result of results$ | async">
+    <div *ngIf="result.data.thumbnail != 'default' && result.data.thumbnail != 'self'">
+      <a target="_blank" [href]="result.data.url">
+        <img [src]="result.data.thumbnail" alt="">
+      </a>
+    </div>
+</div>
