@@ -1,5 +1,5 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { Observable } from 'rxjs';
+import { Observable, Subject } from 'rxjs';
 
 @Component({
   selector: 'app-root',
@@ -8,35 +8,24 @@ import { Observable } from 'rxjs';
 })
 export class AppComponent implements OnInit, OnDestroy {
   title = 'app';
-  observable$;
+  mySubject$;
 
   constructor() {}
 
   ngOnInit() {
 
-    // First Observable creation
-    this.observable$ = Observable.create((observer) => {
-      // Observables contains three methods:
-      // Next,
-      // Error,
-      // Complete
-      observer.next(1);
-      observer.next(2);
-      observer.next(3);
-      observer.complete(3);
-    });
+    this.mySubject$ = new Subject();
+    this.mySubject$.subscribe( x => console.log('First Subscribe', x) );
+    this.mySubject$.next(1);
+    this.mySubject$.next(2);
+    this.mySubject$.unsubscribe();
 
-    // Subscribing to it. (This creates NEW instance.)
-    this.observable$.subscribe(
-      value => console.log(value),
-      err => {},
-      () => console.log('This is the end.')
-    );
-
+    this.mySubject$.subscribe( x => console.log('Second Subscribe (new instance)', x) );
+    this.mySubject$.next(3);
   }
 
   ngOnDestroy() {
-    this.observable$.unsubscribe();
+    this.mySubject$.unsubscribe();
   }
 
 }
