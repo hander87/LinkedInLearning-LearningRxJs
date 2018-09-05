@@ -7,7 +7,8 @@ import {
   map,
   switchMap,
   distinctUntilChanged,
-  tap
+  tap,
+  filter
 } from 'rxjs/operators';
 
 @Component({
@@ -31,6 +32,7 @@ export class AppComponent implements OnInit, OnDestroy {
         distinctUntilChanged(),
         // Previously "do" - Does NOTHING! Good for console logs.
         tap(x => console.log('Logs output: ' + x)),
+        filter( x => this.searchString.length > 2 ? this.searchString.length : '' ),
         switchMap(searchString => this.queryAPI(searchString))
       );
   }
