@@ -1,5 +1,9 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { Observable,  ReplaySubject } from 'rxjs';
+
+// interval adds +1 each second/whatever value you give
+// (RxJs v6 import method for "interval" and "take")
+import { Observable, interval } from 'rxjs';
+import { take } from 'rxjs/operators';
 
 @Component({
   selector: 'app-root',
@@ -8,25 +12,19 @@ import { Observable,  ReplaySubject } from 'rxjs';
 })
 export class AppComponent implements OnInit, OnDestroy {
   title = 'app';
-  mySubject$;
 
   constructor() {}
 
   ngOnInit() {
 
-    // ReplaySubject gives Subscribers all previous and after values
-    this.mySubject$ = new ReplaySubject();
-    this.mySubject$.subscribe( x => console.log('First Subscribe: ', x) );
-    this.mySubject$.next(1);
-    this.mySubject$.next(2);
-    // this.mySubject$.unsubscribe();
+    const numbers$ = interval(1000).pipe(take(5));
 
-    this.mySubject$.subscribe( x => console.log('Second Subscribe: ', x) );
-    this.mySubject$.next(3);
+    numbers$.subscribe(x => console.log(x));
+
   }
 
   ngOnDestroy() {
-    this.mySubject$.unsubscribe();
+
   }
 
 }
