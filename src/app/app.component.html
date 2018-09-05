@@ -16,6 +16,11 @@
         <a target="_blank" [href]="result.data.url">
           <img [src]="result.data.thumbnail" alt="">
         </a>
+        <a
+          target="_blank"
+          [href]="'https://www.reddit.com/' + result.data.permalink">
+          <h4>{{ result.data.title }}</h4>
+        </a>
       </div>
   </div>
 </div>
