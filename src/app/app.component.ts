@@ -16,12 +16,17 @@ export class AppComponent implements OnInit, OnDestroy {
 
     // First Observable creation
     this.observable$ = Observable.create((observer) => {
+      // Observables contains three methods:
+      // Next,
+      // Error,
+      // Complete
       observer.next(1);
       observer.next(2);
       observer.next(3);
       observer.complete(3);
     });
 
+    // Subscribing to it. (This creates NEW instance.)
     this.observable$.subscribe(
       value => console.log(value),
       err => {},
