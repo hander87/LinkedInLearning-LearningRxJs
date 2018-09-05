@@ -1,9 +1,8 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 
-// (RxJs v6 import method for "filter")
-import { Observable, interval } from 'rxjs';
-// Filter filters out certain values we dont want in outout
-import { take, map, filter } from 'rxjs/operators';
+// (RxJs v6 import method for "of" and "mergeMap")
+import { Observable, interval, of } from 'rxjs';
+import { take, map, filter, mergeMap } from 'rxjs/operators';
 
 @Component({
   selector: 'app-root',
@@ -18,14 +17,16 @@ export class AppComponent implements OnInit, OnDestroy {
   ngOnInit() {
 
     const numbers$ = interval(1000);
+    const letters$ = of('a', 'b', 'c', 'd', 'e');
 
-    numbers$
-      .pipe(
+    // mergeMap combines data streams, and access values
+
+    letters$.pipe(mergeMap( x =>
+      numbers$.pipe(
         take(5),
-        map( x => x * 10 ),
-        filter( x => x > 20 )
-      )
-      .subscribe(x => console.log(x));
+        map(i => i + x)
+      ))
+    ).subscribe( x => console.log(x) );
 
   }
 
