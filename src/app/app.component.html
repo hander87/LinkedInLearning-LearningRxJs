@@ -1,5 +1,7 @@
-<h1>
-  {{ title }}!
-</h1>
+<h1>{{ title }}!</h1>
 
-<button>Click Me (Not needed..?)</button>
+<input
+  type="text"
+  [(ngModel)]="searchString"
+  (ngModelChange)="inputChanged($event)"
+  placeholder="Search...">
