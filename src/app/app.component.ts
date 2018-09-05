@@ -1,5 +1,5 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { Observable, BehaviorSubject } from 'rxjs';
+import { Observable,  ReplaySubject } from 'rxjs';
 
 @Component({
   selector: 'app-root',
@@ -14,8 +14,8 @@ export class AppComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
 
-    // BehaviorSubject holds the most RECENT value for NEW subscribers
-    this.mySubject$ = new BehaviorSubject(200);
+    // ReplaySubject gives Subscribers all previous and after values
+    this.mySubject$ = new ReplaySubject();
     this.mySubject$.subscribe( x => console.log('First Subscribe: ', x) );
     this.mySubject$.next(1);
     this.mySubject$.next(2);
