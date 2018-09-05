@@ -1,8 +1,8 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 
-// (RxJs v6 import method for "of" and "mergeMap")
 import { Observable, interval, of } from 'rxjs';
-import { take, map, filter, mergeMap } from 'rxjs/operators';
+// (RxJs v6 import method for "switchMap")
+import { take, map, filter, switchMap } from 'rxjs/operators';
 
 @Component({
   selector: 'app-root',
@@ -19,9 +19,8 @@ export class AppComponent implements OnInit, OnDestroy {
     const numbers$ = interval(1000);
     const letters$ = of('a', 'b', 'c', 'd', 'e');
 
-    // mergeMap combines data streams, and access values
-
-    letters$.pipe(mergeMap( x =>
+    // switchMap Outputs only newest value, instead of ALL values
+    letters$.pipe(switchMap( x =>
       numbers$.pipe(
         take(5),
         map(i => i + x)
